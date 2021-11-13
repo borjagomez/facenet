@@ -6,8 +6,7 @@
  * @flow strict-local
  */
 
-import React from 'react';
-import type {Node} from 'react';
+import React, {Node, useState, useEffect}from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -19,16 +18,35 @@ import {
   Image,
 } from 'react-native';
 import logo from './assets/rever-logo.jpg';
+import Tflite from 'tflite-react-native';
 
 const App: () => Node = () => {
   const isDarkMode = useColorScheme() === 'dark';
+  let tflite = new Tflite();
+
+  useEffect(() => {
+    (async () => {
+
+      tflite.loadModel({
+        model: 'models/mobilefacenet.tflite', 
+        numThreads: 1,
+      },
+      (err, res) => {
+        if(err)
+          console.log(err); 
+        else
+          console.log(res);
+      });
+
+    })();
+  }, []);
 
   return (
     <SafeAreaView style={styles.backgroundScreen}>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
-        style={styles.backgroundStyle}>
+        style={styles.mainView}>
         <View style={styles.container}>
           <Image source={logo} style={styles.logo} />  
         </View>       
@@ -40,6 +58,9 @@ const App: () => Node = () => {
 const styles = StyleSheet.create({
   backgroundScreen: {
     backgroundColor: '#FFF',
+  },
+  mainView: {
+    height: '100%',
   },
   container: {
     flex: 1,
