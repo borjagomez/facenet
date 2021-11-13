@@ -12,8 +12,6 @@ target 'facenet' do
     :hermes_enabled => false
   )
 
-  pod 'TfliteReactNative', :path => '../node_modules/tflite-react-native'
-
   target 'facenetTests' do
     inherit! :complete
     # Pods for testing
