@@ -28,7 +28,8 @@ const App: () => Node = () => {
     (async () => {
 
       tflite.loadModel({
-        model: 'models/mobilefacenet.tflite', 
+        model: 'mobilefacenet.tflite', 
+        labels: '',
         numThreads: 1,
       },
       (err, res) => {
